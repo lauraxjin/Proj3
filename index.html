@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Proj3</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css" title="currentStyle">
+			@import "css/demo_page.css";
+			@import "css/demo_table.css";
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row ">
+        <h1>U.S Balance of Payments 1983 - 2013 </h1>
+        <p class="lead">Balance of payments is a systematic record of all economic transactions between the residents of countries.
+        Among the most commonly used transactions for governemnt are export and import volumns.
+        This particular set of data graphics explore the Goods, Services and Total shares within these two transactions.
+        The graphs demonstrate economic numbers that indicates important market information such as deficits.</p>
+      </div>
+      <div class="row" id="expImp">
+        <div class="col-md-6">
+        
+	  <div id="chart1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <h5>This area percentage map compares difference in export and import volumns in the past 20 years. Importing increases at a faster pace than exporting.
+            The gray area where the two areas differs is also the area for deficits. </h5>
+        </div>
+        <div class="col-md-6">
+	  <div id="chart2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <h5>This graph is another demonstration of the same data. This one shows percentage increases and decreases from year to year.
+            We can see that in more recent years, exporting is in declining while importing shows steady rises. </h5>
+        </div>
+      </div>
+      <br/><br/>
+      <div class="row" id="expImp">
+    <ul class="nav nav-tabs" id="padding">
+      <li class="active"><a href="#exportPie" data-toggle="tab">U.S. Exports 2013</a></li>
+      <li><a href="#importPie" data-toggle="tab">U.S. Imports 2013</a></li>
+
+    </ul>
+
+    <div class="tab-content" id="padding">
+      <div class="tab-pane active" id="exportPie"><br><h4>U.S. Total Export 2013 </h4>
+      <p class="tabtext">Hover over to see the actual ratio between Goods and Services for U.S Exports 2013.</p>
+      <br>  <div id="chart3"></div>	<br></div>
+      <h5>These two tabbed charts show how Goods and Services are shared between export and import. It is apparent from the charts that
+      goods exceeds services in both exporting and importing. We import greater percentage of goods than export them.</h5>
+      <div class="tab-pane" id="importPie"><br><h4>U.S. Total Import 2013 </h4>
+      <p class="tabtext">Hover over to see the actual ratio between Goods and Services for U.S. Imports 2013.</p><br>
+      <div id="chart4" style="min-width: 1150px; height: 400px; margin: 0 auto"></div><br></div>
+      </div>
+
+  <div class="btn-group" id="button2" id="padding"><button type="button" class="btn btn-default btn-sm">&nbsp;Toggle to hide U.S Balance of Payments Data 2013</button></div>
+      
+    <p class="text" id="padding"><br/>
+    <b>
+        Period: 2013 | TotalBOP : -474,864 | GoodsBOP : -703,910 | ServicesBOP : 229,046 | ExportsTotal : 2,271,385 | ExportsGoods : 1,589,664 | ExportsServices : 681,721 | ImportsTotal : 2,746,249 | ImportsGoods : 2,293,574 | ImportsServices : 452,675 <br>
+     <hr>
+      </b>
+    </p>
+
+      </div>
+      <br/><br/>
+      <div class="row">
+        <div class="col-md-12">
+        <h4> Search Friendly Source Data </h4>
+	  <table id="year_table"></table>
+        </div>
+        <br/>
+        <hr>
+            <br/>
+        <div class="col-md-12">
+        <h4> Credits </h4>
+        <ul>
+            <li>Data Source : http://catalog.data.gov/dataset/us-international-trade-in-goods-and-services</li>
+            <li>Page Content: http://en.wikipedia.org/wiki/Balance_of_payments</li>
+            <li>Data : www.census.gov/foreign-trade/www/press.html</li>
+        <ul>
+        </div>
+      </div>
+      
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>>
+    <script>
+    $( "#button2" ).click(function() {
+    $( ".text" ).toggle( "slow" )
+    });
+    </script>
+    <script>
+      aaData = new Array;
+   
+      var  period= [];
+      var  TotalBal = [];
+      var  GoodsBal= [];
+      var  ServicesBal= [];
+      var  TotalExp= [];
+      var  GoodsExp= [];
+      var  ServicesExp= [];
+      var  TotalImp= [];
+      var  GoodsImp= [];
+      var  ServicesImp= [];
+      var goodsPerDiff=[];
+      var servicesPerDiff=[];
+      var totalBOP=[];
+      var totalG=[];
+      var totalS=[];
+      var totalExp=[];
+      var GExp=[];
+      var SExp=[];
+      var totalImp=[];
+      var GImp=[];
+      var SImp=[];
+      
+      $(document).ready(function() {
+         
+
+	$("#message").text("DOM Loaded and Ready");
+        LoadXml();
+  
+        //Exports and Imports 
+	$.ajax({
+            type: "GET",
+            url: "twentyBOP.xml",
+            datatype: "xml",
+            success: function(xml) {
+                
+                   $(xml).find('year').each(function(){
+                    //console.log("once for every year");
+                            var $year = $(this);
+                            
+                            period.push($year.find("period").text());
+                            //console.log(period);
+                            TotalBal.push(parseInt($year.find("TotalBalance").text()));
+                            //console.log(TotalBal);
+                            GoodsBal.push(parseInt($year.find("GoodsBalance").text()));
+                            ServicesBal.push(parseInt($year.find("ServicesBalance").text()));
+                            TotalExp.push(parseInt($year.find("TotalExports").text()));
+                            GoodsExp.push(parseInt($year.find("GoodsExports").text()));
+                            ServicesExp.push(parseInt($year.find("ServicesExports").text()));
+                            TotalImp.push(parseInt($year.find("TotalImports").text()));
+                            GoodsImp.push(parseInt($year.find("GoodsImports").text()));
+                            ServicesImp.push(parseInt($year.find("ServicesImports").text()));
+                            //console.log(TotalImp);
+                    });
+             writeChart1();
+                } 
+            
+         });
+        //percentage difference
+         $.ajax({
+            type: "GET",
+            url: "perDiff.xml",
+            datatype: "xml",
+            success: function(xml) {
+                
+                    $(xml).find("year").each(function(index) {
+                    
+                            var $year = $(this);
+                            
+                            period.push($year.find("period").text());
+                            //console.log(period);
+                            goodsPerDiff.push(parseInt($year.find("goodsPerDiff").text()));
+                            //console.log(TotalBal);
+                            servicesPerDiff.push(parseInt($year.find("servicesPerDiff").text()));
+                            //console.log(servicesPerDiff);
+                    });
+                    
+              writeChart2();
+                } 
+         });
+         //half donuts pie chart
+         $.ajax({
+            type: "GET",
+            url: "2013Pie.xml",
+            datatype: "xml",
+            success: function(xml) {
+                
+                    $(xml).find("year").each(function(index) {
+                    
+                           var $year = $(this);
+                        
+                            period.push($year.find("period").text());
+                            //console.log(period);
+                            totalBOP.push(parseInt($year.find("totalBOP-2013").text()));
+                            //console.log(TotalBal);
+                            totalG.push(parseInt($year.find("totalGoods-2013").text()));
+                            totalS.push(parseInt($year.find("totalServices-2013").text()));
+                            totalExp.push(parseInt($year.find("expTotal-2013").text()));
+                            GExp.push(parseInt($year.find("expGoods-2013").text()));
+                            SExp.push(parseInt($year.find("expServices-2013").text()));
+                            totalImp.push(parseInt($year.find("impTotal-2013").text()));
+                            GImp.push(parseInt($year.find("impGoods-2013").text()));
+                            SImp.push(parseInt($year.find("impServices-2013").text()));
+                    });
+              writeChart3();
+              writeChart4();
+                } 
+         });
+        //console.log(TotalExp);
+       function writeChart1(){
+        $ ('#chart1').highcharts
+        var chart1 = new Highcharts.Chart({
+            chart: {
+                type: 'areaspline',
+                renderTo: 'chart1'
+            },
+            title: {
+                text: 'Balance of Payments 1983-2013'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                verticalAlign: 'top',
+                x: 150,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF'
+            },
+            xAxis: {
+                categories: 
+                   period,
+                plotBands: [{ // visualize the weekend
+                    from: 4.5,
+                    to: 6.5,
+                    color: 'rgba(68, 170, 213, .2)'
+                }]
+            },
+            yAxis: {
+                title: {
+                    text: 'Balance of Payments (in millions of dollars)'
+                }
+            },
+            tooltip: {
+                shared: true,
+                valueSuffix: ' millions of dollars'
+            },
+            credits: {
+                enabled: true
+            },
+            plotOptions: {
+                areaspline: {
+                    fillOpacity: .5,
+                }
+            },
+            series: [{
+                name: 'Exports',
+                data: TotalExp,
+            }, {
+                name: 'Imports',
+                data: TotalImp,
+            }]
+        });}
+        function writeChart2(){
+          //$ ('#chart2').highcharts
+        var chart2 = new Highcharts.Chart({
+            chart: {
+                renderTo:'chart2',
+                type: 'column'
+            },
+            title: {
+                text: 'Export and Import % Difference 1983-2010'
+            },
+            xAxis: {
+                categories: period,
+            },
+            yAxis: {
+                title: {
+                    text: 'Percentages of Difference from the Year Before'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Export % Difference',
+                data: goodsPerDiff,
+            }, {
+                name: 'Import % Difference',
+                data: servicesPerDiff,
+            }]
+        });
+    };
+    function writeChart3(){
+          var chart3 = new Highcharts.Chart({
+        chart: {
+            renderTo:'chart3',
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'U.S. Exports <br/> 2013',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 50
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: true,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    }
+                },
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%']
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'U.S. Exports 2013',
+            innerSize: '50%',
+            data: [
+                
+                ['Goods: 70%',  70 ],
+                ['Services: 30%',  30],
+             
+            ]
+        }]
+    });
+
+
+    };
+     function writeChart4(){
+       var chart4 = new Highcharts.Chart({
+        chart: {
+            renderTo:'chart4',
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'U.S. Imports <br/> 2013',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 50
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: true,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    }
+                },
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%']
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'U.S. Imports 2013',
+            innerSize: '50%',
+            data: [
+                ['Goods: 83.5%', 83.5],
+                ['Services: 16.5%',  16.5],
+              
+            ]
+        }]
+    });
+    };
+ });
+    function LoadXml() {
+        $("#message").text("loadXML has begun!");
+        $.ajax({
+          type: "GET",
+          url: "BOP.xml",
+          dataType: "xml",
+          success: parseXml
+        });
+        } //close loadXML
+
+  
+function parseXml(xml)
+{
+
+  $(xml).find("year").each(function(index)
+  {
+    //console.log("work");
+        var period=$(this).find("period").text();
+        var totalBal=$(this).find("TotalBalance").text();
+        var goodsBal=$(this).find("GoodsBalance").text();
+        var servicesBal=$(this).find("ServicesBalance").text();
+        var totalExp=$(this).find("TotalExports").text();
+        var goodsExp=$(this).find("GoodsExports").text();
+        var servicesExp=$(this).find("ServicesExports").text();
+        var totalImp=$(this).find("TotalImports").text();
+        var goodsImp=$(this).find("GoodsImports").text();
+        var servicesImp=$(this).find("ServicesImports").text();
+        
+      // Builds table data
+      yearArray = new Array;
+      yearArray.push(period, totalBal,goodsBal,servicesBal,totalExp,goodsExp,servicesExp,totalImp,goodsImp,servicesImp);
+      aaData.push(yearArray);
+     
+	
+  });
+  aoColumns = new Array;
+  aoColumns = [{"sTitle":"Period"},{"sTitle":"Total(Balance)"},{"sTitle":"Goods(Balance)"},{"sTitle":"Services(Balance)"},{"sTitle":"Total(Exports)"},{"sTitle":"Goods(Exports)"},{"sTitle":"Services(Exports)"},{"sTitle":"Total(Imports)"},{"sTitle":"Goods(Imports)"},{"sTitle":"Services(Imports)"}];
+  //console.log(aoColumns);
+  
+  $("#year_table").html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="table"></table>');
+  $('#year_table').dataTable( {
+    "aaData":aaData,
+    "aoColumns":aoColumns
+  });
+}
+
+    </script>
+    
+    
+  </body>
+</html>
+
